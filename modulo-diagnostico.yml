@@ -1,0 +1,31 @@
+server:
+  port: 8092
+  address: 0.0.0.0
+
+# Gestión de servicios externos
+# TIP: Si usas el Gateway, podrías apuntar todos a tu IP de Radmin :8080
+external:
+  services:
+    gemini:
+      base-url: http://${GATEWAY_IP}:8080/gemini
+    graph:
+      base-url: http://${CLIENT_IP}:8083
+    recommendation:
+      base-url: http://${CLIENT_IP}:5000
+
+spring:
+  security:
+      oauth2:
+        resourceserver:
+          jwt:
+            issuer-uri: http://localhost:9003
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DIAG_DB_URL}
+    username: ${DIAG_DB_USER}
+    password: ${DIAG_DB_PASS}
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update

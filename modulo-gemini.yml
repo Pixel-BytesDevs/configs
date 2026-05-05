@@ -1,0 +1,14 @@
+server:
+  port: 8084
+
+# Configuraciones que Python leerá
+api:
+  key: ${GEMINI_API_KEY}
+  model: "gemini-1.5-flash"
+
+# Datos para que Python sepa dónde registrarse
+eureka:
+  client:
+    service-url: http://26.138.156.26:8761/eureka/
+  instance:
+    ip-address: 26.138.194.69 # IP de Radmin de tu amigo
