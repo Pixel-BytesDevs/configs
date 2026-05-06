@@ -2,25 +2,31 @@ server:
   port: 8092
   address: 0.0.0.0
 
-# Gestión de servicios externos
-# TIP: Si usas el Gateway, podrías apuntar todos a tu IP de Radmin :8080
 external:
   services:
     gemini:
-      base-url: http://${GATEWAY_IP}:8080/gemini
+      # Si Gemini es un microservicio tuyo (FastAPI/Spring), pon su nombre aquí.
+      # Si es un API externa de Google, usa la URL real externa.
+      # Dejaré la variable por si tienes un contenedor llamado 'gemini-service'
+      base-url: ${GEMINI_URL:http://gemini-service:8080/gemini}
     graph:
-      base-url: http://${CLIENT_IP}:8083
+      # Apuntamos directamente al contenedor del gestor-grafo
+      base-url: http://gestor-grafo:8083
     recommendation:
-      base-url: http://${CLIENT_IP}:5000
+      # Asumiendo que tu servicio de Flask se llamará 'flask-recommendation' en Docker
+      base-url: http://flask-recommendation:5000
 
 spring:
   security:
-      oauth2:
-        resourceserver:
-          jwt:
-            issuer-uri: http://localhost:9003
+    oauth2:
+      resourceserver:
+        jwt:
+          # Apuntamos al Auth Server de la red interna
+          issuer-uri: ${AUTH_ISSUER_URI:http://auth-server:9003}
+  
   datasource:
     driver-class-name: org.postgresql.Driver
+    # Estas variables se inyectarán desde el docker-compose
     url: ${DIAG_DB_URL}
     username: ${DIAG_DB_USER}
     password: ${DIAG_DB_PASS}

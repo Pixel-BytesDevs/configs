@@ -1,8 +1,10 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://${EUREKA_IP}:8761/eureka/
+      # Ponemos el nombre del contenedor de Docker directamente.
+      # (Si algún día corres esto local, puedes inyectar EUREKA_URL=http://localhost:8761/eureka/)
+      defaultZone: ${EUREKA_URL:http://eureka-server:8761/eureka/}
   instance:
     prefer-ip-address: true
-    ip-address: ${CLIENT_IP}
+    # ELIMINAMOS la línea de ip-address: ${CLIENT_IP}
     instance-id: ${spring.application.name}:${random.value}

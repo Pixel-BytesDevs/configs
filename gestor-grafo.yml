@@ -4,10 +4,11 @@ server:
 
 spring:
   security:
-        oauth2:
-          resourceserver:
-            jwt:
-              issuer-uri: http://localhost:9003
+    oauth2:
+      resourceserver:
+        jwt:
+          # Apuntamos al contenedor auth-server en la red de Docker
+          issuer-uri: ${AUTH_ISSUER_URI:http://auth-server:9003}
   neo4j:
     uri: ${NEO4J_URI}
     authentication:
