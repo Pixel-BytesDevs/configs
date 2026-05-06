@@ -22,7 +22,7 @@ spring:
       resourceserver:
         jwt:
           # Apuntamos al Auth Server de la red interna
-          issuer-uri: ${AUTH_ISSUER_URI:http://auth-server:9003}
+          issuer-uri: ${AUTH_ISSUER_URI:http://3.145.22.173:9003}
   
   datasource:
     driver-class-name: org.postgresql.Driver
